@@ -1,0 +1,1918 @@
+DSA PATTERNS KNOWLEDGE BASE
+Beginner-Friendly Problem Solving Guide
+Version: 1.0
+
+Purpose:
+This file is designed to help a DSA agent identify common problem-solving patterns
+from a user's question and then give useful hints instead of directly giving the
+full solution.
+
+HOW TO USE THIS FILE
+For each pattern, pay attention to:
+1. What the pattern is
+2. When to use it
+3. Clues in the problem statement
+4. Common questions to ask
+5. Common mistakes
+6. Hint style for the user
+7. Example problems
+
+================================================================================
+1. BRUTE FORCE
+================================================================================
+What it is:
+Try every possible answer and check which one works.
+
+When to use:
+- When you are starting to understand the problem
+- When constraints are very small
+- When you need a baseline approach before optimizing
+
+Strong clues:
+- n is small
+- "Return all possibilities"
+- "Try every pair / every subset / every path"
+- No obvious optimization is visible yet
+
+Ask yourself:
+- Can I try all possibilities safely?
+- How many combinations are there?
+- Is this acceptable for the given constraints?
+
+Typical time complexity:
+- O(n^2), O(n^3), O(2^n), O(n!) depending on the problem
+
+Common mistakes:
+- Using brute force when constraints are too large
+- Not estimating time complexity first
+
+Hints to give user:
+- Start with the most direct method first
+- Can you generate all possibilities and test each one?
+- After writing brute force, check what repeated work can be removed
+
+Example problems:
+- Two Sum (naive)
+- Maximum subarray (checking all subarrays)
+- Generate all subsets
+
+================================================================================
+2. HASHING / HASH MAP / HASH SET
+================================================================================
+What it is:
+Store seen values, counts, positions, or mappings for fast lookup.
+
+When to use:
+- Need O(1) average lookup
+- Need frequency counting
+- Need duplicate detection
+- Need complement lookup like target - x
+
+Strong clues:
+- "Find pair with target sum"
+- "Check if duplicate exists"
+- "Count frequency"
+- "First unique"
+- "Group by value"
+
+Ask yourself:
+- Do I need fast lookup?
+- Do I need to remember what I have seen before?
+- Do I need counts or positions?
+
+Typical time complexity:
+- Usually O(n)
+
+Common mistakes:
+- Forgetting collisions are abstracted away
+- Confusing map and set
+- Updating count at wrong time
+
+Hints to give user:
+- What information should you remember while scanning the array?
+- Do you need count, index, or just presence?
+- Can a hash map reduce repeated searching?
+
+Example problems:
+- Two Sum
+- Contains Duplicate
+- Valid Anagram
+- First Unique Character
+- Group Anagrams
+
+================================================================================
+3. PREFIX SUM
+================================================================================
+What it is:
+Precompute cumulative sums so range sums can be answered quickly.
+
+When to use:
+- Repeated subarray sum queries
+- Sum from l to r
+- Need to transform O(n^2) range sum checking to O(n)
+
+Strong clues:
+- "Sum of subarray from l to r"
+- "Count subarrays with sum ..."
+- "Range sum query"
+- "Running sum"
+
+Ask yourself:
+- Can I represent the sum up to index i?
+- If I know prefix sums, how do I get sum(l..r)?
+- Can this help count subarrays?
+
+Typical time complexity:
+- Build O(n), each query O(1)
+
+Common mistakes:
+- Off-by-one indexing
+- Forgetting prefix[0] = 0 style setup
+- Confusing prefix sum with sliding window when negatives exist
+
+Hints to give user:
+- Instead of recomputing every subarray sum, can you precompute cumulative sums?
+- What is the relation between prefix[r] and prefix[l-1]?
+- If you need count of subarrays with target sum, can you store previous prefix sums?
+
+Example problems:
+- Range Sum Query
+- Subarray Sum Equals K
+- Find Pivot Index
+
+================================================================================
+4. DIFFERENCE ARRAY
+================================================================================
+What it is:
+Efficient way to perform multiple range updates by storing changes only at boundaries.
+
+When to use:
+- Many range increment/decrement operations
+- Need final array after many updates
+
+Strong clues:
+- "Add x to all elements from l to r"
+- Many update queries on ranges
+- Need efficient batch updates
+
+Ask yourself:
+- Can I mark only start and end effect instead of updating every element?
+- Can I reconstruct final values using prefix sum?
+
+Typical time complexity:
+- O(1) per range update, O(n) reconstruction
+
+Common mistakes:
+- Forgetting to subtract at r + 1 when valid
+- Boundary errors
+
+Hints to give user:
+- Do not update the full range directly
+- Mark where effect starts and where effect ends
+- After processing all updates, accumulate the result
+
+Example problems:
+- Range Addition
+- Corporate Flight Bookings
+
+================================================================================
+5. TWO POINTERS
+================================================================================
+What it is:
+Use two indices moving through an array or string, usually from left/right or at different speeds.
+
+When to use:
+- Sorted arrays
+- Pair problems
+- Removing duplicates
+- Palindrome checks
+- Merging or comparing from both ends
+
+Strong clues:
+- "Find pair"
+- "Sorted array"
+- "Closest pair"
+- "Remove duplicates in-place"
+- "Compare left and right"
+
+Ask yourself:
+- Can two positions move based on comparison?
+- Is the array sorted?
+- Can moving one pointer improve the answer?
+
+Typical time complexity:
+- Usually O(n)
+
+Common mistakes:
+- Using it on unsorted data without sorting when needed
+- Wrong pointer movement logic
+- Missing duplicate handling
+
+Hints to give user:
+- Can one pointer start at the beginning and the other at the end?
+- After comparing current values, which pointer should move and why?
+- If the array is sorted, can you avoid checking all pairs?
+
+Example problems:
+- Two Sum II
+- Container With Most Water
+- Valid Palindrome
+- Remove Duplicates from Sorted Array
+- 3Sum
+
+================================================================================
+6. SLIDING WINDOW
+================================================================================
+What it is:
+Maintain a contiguous window in an array/string and expand/shrink it efficiently.
+
+When to use:
+- Subarray or substring
+- Contiguous segment
+- Longest / shortest / maximum / minimum window
+- Fixed-size or variable-size window
+
+Strong clues:
+- "Subarray"
+- "Substring"
+- "Longest"
+- "Smallest window"
+- "At most k"
+- "Exactly k" (sometimes with counting trick)
+- "Contiguous"
+
+Ask yourself:
+- Is the answer based on a contiguous region?
+- Can I maintain a window instead of checking all subarrays?
+- When should the window expand or shrink?
+
+Typical time complexity:
+- Usually O(n)
+
+Common mistakes:
+- Confusing with subsequence problems
+- Not updating answer at the right moment
+- Shrinking too late or too early
+
+Hints to give user:
+- Since the region is contiguous, can you keep left and right boundaries?
+- What condition makes the window valid or invalid?
+- When the condition breaks, which side should move?
+
+Example problems:
+- Maximum Sum Subarray of Size K
+- Longest Substring Without Repeating Characters
+- Minimum Size Subarray Sum
+- Minimum Window Substring
+
+================================================================================
+7. FAST AND SLOW POINTERS
+================================================================================
+What it is:
+Move two pointers at different speeds to detect cycles or middle positions.
+
+When to use:
+- Linked list cycle detection
+- Finding middle node
+- Happy number cycle
+- Detecting loops in arrays
+
+Strong clues:
+- "Cycle"
+- "Middle of linked list"
+- "Loop detection"
+- Repeated transformation of number/state
+
+Ask yourself:
+- If one pointer moves faster, will they meet?
+- Do I need middle without extra space?
+- Is the process repeating?
+
+Typical time complexity:
+- Usually O(n), space O(1)
+
+Common mistakes:
+- Forgetting null checks in linked lists
+- Wrong meeting or exit conditions
+
+Hints to give user:
+- What happens if one pointer moves 1 step and the other moves 2 steps?
+- If there is a cycle, will they eventually meet?
+- If not cycle, can this still help find the middle?
+
+Example problems:
+- Linked List Cycle
+- Middle of the Linked List
+- Happy Number
+
+================================================================================
+8. BINARY SEARCH
+================================================================================
+What it is:
+Search by repeatedly cutting the search space in half.
+
+When to use:
+- Sorted array
+- Monotonic condition
+- Need first/last valid answer
+- Search on answer space
+
+Strong clues:
+- "Sorted"
+- "Find position"
+- "Minimum possible"
+- "Maximum possible"
+- "Can we do it with value x?" with monotonic yes/no
+
+Ask yourself:
+- Is the search space sorted or monotonic?
+- Can I discard half after each check?
+- Am I searching in array indices or answer values?
+
+Typical time complexity:
+- O(log n)
+
+Common mistakes:
+- Infinite loop from wrong mid update
+- Confusing lower bound and upper bound
+- Overflow in some languages using (l + r) / 2
+
+Hints to give user:
+- Can you define a search space where the answer is monotonic?
+- After checking mid, which half can be safely removed?
+- Are you looking for exact match, first true, or last true?
+
+Example problems:
+- Binary Search
+- Search Insert Position
+- First Bad Version
+- Capacity To Ship Packages Within D Days
+- Koko Eating Bananas
+
+================================================================================
+9. MODIFIED BINARY SEARCH
+================================================================================
+What it is:
+Binary search with extra structure like rotation, duplicates, peak, or boundary answers.
+
+When to use:
+- Rotated sorted arrays
+- First/last occurrence
+- Peak element
+- Search in nearly sorted structures
+
+Strong clues:
+- "Rotated sorted array"
+- "First occurrence"
+- "Last occurrence"
+- "Peak"
+- "Bitonic"
+- "Infinite sorted array" conceptually
+
+Ask yourself:
+- Which half is sorted?
+- Do I need boundary index rather than just existence?
+- Can the condition still let me discard half?
+
+Typical time complexity:
+- Usually O(log n)
+
+Common mistakes:
+- Not identifying sorted half correctly
+- Mishandling duplicates
+- Missing edge cases near boundaries
+
+Hints to give user:
+- At each step, can you identify which side is properly sorted?
+- Is the target guaranteed to lie in only one half?
+- Are you searching for presence or a boundary?
+
+Example problems:
+- Search in Rotated Sorted Array
+- Find Minimum in Rotated Sorted Array
+- Find First and Last Position of Element
+
+================================================================================
+10. SORTING AS A PREPROCESSING STEP
+================================================================================
+What it is:
+Sort the data first to make the main logic easier.
+
+When to use:
+- Need ordered comparison
+- Interval merging
+- Duplicate grouping
+- Greedy by value/time/deadline
+- Two pointers after sorting
+
+Strong clues:
+- "Intervals"
+- "Closest values"
+- "Merge overlaps"
+- "Need ordered traversal"
+
+Ask yourself:
+- Does sorting reveal structure?
+- After sorting, can I solve in one pass?
+- Is order important to compare neighbors?
+
+Typical time complexity:
+- Usually O(n log n)
+
+Common mistakes:
+- Forgetting to map back to original indices when needed
+- Sorting when order must be preserved and that matters
+
+Hints to give user:
+- Would sorting make adjacent relationships useful?
+- If intervals are sorted by start time, can they be merged in one pass?
+- Can sorting convert a hard search into simple scanning?
+
+Example problems:
+- Merge Intervals
+- Meeting Rooms
+- 3Sum
+- Minimum Number of Arrows to Burst Balloons
+
+================================================================================
+11. GREEDY
+================================================================================
+What it is:
+Make the best local choice at each step, hoping it leads to global optimum.
+
+When to use:
+- Need minimum or maximum under structure that supports local choices
+- Scheduling, intervals, coins (not always), jumps
+- Choosing earliest finish, largest gain, smallest cost at each step
+
+Strong clues:
+- "Minimum number"
+- "Maximum activities"
+- "Choose best next step"
+- Intervals/scheduling
+- Need simple one-pass decisions
+
+Ask yourself:
+- Can a local best choice be proven safe?
+- If I take the best option now, can future choices still work?
+- Can I justify the choice formally?
+
+Typical time complexity:
+- Often O(n log n) because of sorting, or O(n)
+
+Common mistakes:
+- Using greedy when proof does not exist
+- Assuming local optimum always works
+- Ignoring counterexamples
+
+Hints to give user:
+- Try to think what decision looks best right now
+- Can you prove that choosing this option never hurts the final answer?
+- Does sorting help define the greedy choice?
+
+Example problems:
+- Activity Selection
+- Jump Game
+- Gas Station
+- Non-overlapping Intervals
+- Minimum Number of Platforms variations
+
+================================================================================
+12. RECURSION
+================================================================================
+What it is:
+Solve a problem by reducing it to smaller subproblems.
+
+When to use:
+- Tree traversal
+- Subsets/permutations
+- Divide and conquer
+- Problems naturally defined in terms of smaller inputs
+
+Strong clues:
+- "Generate all"
+- Trees
+- "Do same thing for left and right"
+- Repeated smaller structure
+
+Ask yourself:
+- What is the smaller version of this problem?
+- What is the base case?
+- How do I combine smaller answers?
+
+Typical time complexity:
+- Depends on branching and depth
+
+Common mistakes:
+- Missing base case
+- Infinite recursion
+- Recomputing same state many times
+
+Hints to give user:
+- Can you define the answer in terms of a smaller input?
+- What is the simplest possible input where answer is obvious?
+- What work should happen before and after recursive call?
+
+Example problems:
+- Tree traversals
+- Fibonacci
+- Factorial
+- Generate subsets
+
+================================================================================
+13. BACKTRACKING
+================================================================================
+What it is:
+Try a choice, recurse, then undo the choice.
+
+When to use:
+- Generate all valid combinations
+- Permutations
+- N-Queens
+- Sudoku
+- Word search
+- Constraint satisfaction
+
+Strong clues:
+- "Generate all valid"
+- "Return all combinations"
+- Need to try options and reject invalid ones
+- Search space with constraints
+
+Ask yourself:
+- What choices do I have at each step?
+- How do I detect invalid path early?
+- What state must be undone after recursion?
+
+Typical time complexity:
+- Often exponential
+
+Common mistakes:
+- Forgetting to undo state
+- Not pruning invalid branches
+- Copying too much state unnecessarily
+
+Hints to give user:
+- At each position, what are the possible choices?
+- After choosing one option, can you recursively solve the remaining problem?
+- What should you undo before returning?
+
+Example problems:
+- Subsets
+- Permutations
+- Combination Sum
+- N-Queens
+- Sudoku Solver
+- Word Search
+
+================================================================================
+14. DIVIDE AND CONQUER
+================================================================================
+What it is:
+Split the problem into smaller independent parts, solve them, then combine.
+
+When to use:
+- Merge sort style
+- Tree-like decomposition
+- Need combine step after solving halves
+
+Strong clues:
+- "Split into left and right"
+- "Merge results"
+- Recurrence like T(n) = 2T(n/2) + ...
+
+Ask yourself:
+- Can the problem be divided into independent subproblems?
+- How do I combine partial answers?
+- Is recursion over halves natural here?
+
+Typical time complexity:
+- Often O(n log n)
+
+Common mistakes:
+- Confusing with general recursion
+- Inefficient combine step
+
+Hints to give user:
+- Can you solve left half and right half separately?
+- What information should each half return?
+- How do you merge both answers?
+
+Example problems:
+- Merge Sort
+- Maximum Subarray (divide and conquer version)
+- Count Inversions
+
+================================================================================
+15. DYNAMIC PROGRAMMING (DP)
+================================================================================
+What it is:
+Store results of overlapping subproblems so they are not recomputed.
+
+When to use:
+- Optimal answer
+- Count ways
+- Min/max operations
+- Repeated states
+- Recursion has overlapping work
+
+Strong clues:
+- "Minimum cost"
+- "Maximum profit"
+- "Count ways"
+- "Can reach end?"
+- Choices at each step with repeated states
+
+Ask yourself:
+- What is the state?
+- What decision changes the state?
+- What is the recurrence relation?
+- Is there overlap in subproblems?
+
+Typical time complexity:
+- Depends on states and transitions
+
+Common mistakes:
+- Wrong state definition
+- Wrong transition
+- Forgetting base cases
+- Not knowing whether 1D or 2D DP is needed
+
+Hints to give user:
+- What smallest information uniquely identifies a subproblem?
+- Once you define state, how can current answer depend on smaller states?
+- Can you memoize recursion first, then convert to tabulation?
+
+Common sub-patterns:
+- 1D DP
+- 2D DP
+- DP on subsequences
+- DP on strings
+- DP on grid
+- DP on stock
+- DP on partition
+- DP on LIS
+- DP on trees
+- Bitmask DP
+
+Example problems:
+- Fibonacci
+- Climbing Stairs
+- House Robber
+- Coin Change
+- Longest Common Subsequence
+- 0/1 Knapsack
+- Edit Distance
+
+================================================================================
+16. MEMOIZATION
+================================================================================
+What it is:
+Top-down DP using recursion + cache.
+
+When to use:
+- Natural recursive formulation exists
+- Repeated states
+- Easier than tabulation to think about initially
+
+Strong clues:
+- Recursive solution repeats same calls
+- State can be stored in dictionary/table
+
+Ask yourself:
+- Which parameters define the state?
+- Have I already solved this state?
+
+Typical time complexity:
+- Number of unique states x transition cost
+
+Common mistakes:
+- Cache key missing a variable
+- Not storing results before returning
+
+Hints to give user:
+- Your recursive solution repeats work
+- Can you store result of each state so it is computed once?
+- What tuple of variables uniquely defines the subproblem?
+
+Example problems:
+- Fibonacci
+- Coin Change
+- LCS
+- Decode Ways
+
+================================================================================
+17. TABULATION
+================================================================================
+What it is:
+Bottom-up DP using loops.
+
+When to use:
+- State order can be built iteratively
+- Want to avoid recursion overhead
+
+Strong clues:
+- Recurrence depends on smaller indices/states
+- Can fill table from base cases upward
+
+Ask yourself:
+- In what order should states be filled?
+- What are base rows/columns?
+
+Typical time complexity:
+- Same as memoization in many cases
+
+Common mistakes:
+- Wrong fill order
+- Bad initialization
+- Off-by-one indices
+
+Hints to give user:
+- Start from the smallest solvable state
+- Build the answer gradually until final state is reached
+- Which previous cells does current cell depend on?
+
+Example problems:
+- Climbing Stairs
+- Knapsack
+- LCS
+- Grid path problems
+
+================================================================================
+18. MONOTONIC STACK
+================================================================================
+What it is:
+A stack that is kept increasing or decreasing to answer nearest greater/smaller type questions.
+
+When to use:
+- Next greater element
+- Previous smaller element
+- Histogram area
+- Temperature wait days
+- Span problems
+
+Strong clues:
+- "Nearest greater"
+- "Nearest smaller"
+- "First greater to left/right"
+- Need linear-time processing of comparisons
+
+Ask yourself:
+- Do I need to know nearest previous/next element with some order property?
+- Can elements be popped because they are no longer useful?
+
+Typical time complexity:
+- O(n)
+
+Common mistakes:
+- Choosing wrong stack monotonic direction
+- Confusing whether to store values or indices
+- Mishandling equal values
+
+Hints to give user:
+- While the current element breaks the stack order, should you pop?
+- Do you need index information to compute distance?
+- Should the stack be increasing or decreasing?
+
+Example problems:
+- Next Greater Element
+- Daily Temperatures
+- Largest Rectangle in Histogram
+- Stock Span
+
+================================================================================
+19. MONOTONIC QUEUE / DEQUE
+================================================================================
+What it is:
+Deque that keeps elements in useful order for sliding window min/max.
+
+When to use:
+- Sliding window maximum/minimum
+- Need max/min of current window in O(1)
+
+Strong clues:
+- "Maximum of every window of size k"
+- "Minimum of each sliding window"
+
+Ask yourself:
+- Can I remove useless elements from back?
+- Can I remove expired elements from front?
+
+Typical time complexity:
+- O(n)
+
+Common mistakes:
+- Forgetting to remove out-of-window indices
+- Storing values when indices are needed
+
+Hints to give user:
+- Which elements can never become answer later and should be removed?
+- How do you know if the front index is outside the current window?
+
+Example problems:
+- Sliding Window Maximum
+- Shortest subarray variants with deque
+
+================================================================================
+20. STACK
+================================================================================
+What it is:
+LIFO structure useful for nesting, matching, undo, and expression processing.
+
+When to use:
+- Parentheses matching
+- Evaluate expressions
+- Parse nested structures
+- Simulate recursion
+
+Strong clues:
+- "Valid parentheses"
+- "Nested"
+- "Undo last"
+- Need reverse-like behavior
+
+Ask yourself:
+- Does the most recent unfinished item matter first?
+- Can nested structure be solved by push/pop?
+
+Typical time complexity:
+- Usually O(n)
+
+Common mistakes:
+- Popping from empty stack
+- Not checking final emptiness
+
+Hints to give user:
+- Whenever you open something, can you push it?
+- When you close something, what should match at the top?
+
+Example problems:
+- Valid Parentheses
+- Min Stack
+- Evaluate Reverse Polish Notation
+
+================================================================================
+21. QUEUE / BFS-LIKE LEVEL PROCESSING
+================================================================================
+What it is:
+FIFO structure for level order or shortest path in unweighted graph.
+
+When to use:
+- Level by level traversal
+- Minimum steps in unweighted graph/grid
+- Multi-source spreading process
+
+Strong clues:
+- "Shortest path in unweighted graph"
+- "Minimum moves"
+- "Rotting/spreading"
+- "Level order traversal"
+
+Ask yourself:
+- Does every move have equal weight?
+- Do I need nodes processed in order of distance/level?
+
+Typical time complexity:
+- Usually O(V + E) or O(n*m) in grid
+
+Common mistakes:
+- Visiting node multiple times
+- Marking visited too late
+
+Hints to give user:
+- If all edges have equal cost, BFS often gives shortest path
+- Can you process nodes layer by layer?
+- When should a node be marked visited?
+
+Example problems:
+- Binary Tree Level Order Traversal
+- Rotten Oranges
+- Word Ladder
+- Shortest Path in Binary Matrix
+
+================================================================================
+22. HEAP / PRIORITY QUEUE
+================================================================================
+What it is:
+Data structure that gives quick access to smallest or largest element.
+
+When to use:
+- Need top k
+- Need repeated min/max extraction
+- Scheduling
+- Merge sorted lists
+- Dijkstra-like processing
+
+Strong clues:
+- "k largest"
+- "k smallest"
+- "Median stream"
+- "Always pick smallest/largest next"
+
+Ask yourself:
+- Do I repeatedly need best element?
+- Is full sorting unnecessary?
+- Should it be min-heap or max-heap?
+
+Typical time complexity:
+- O(log n) insertion/removal
+
+Common mistakes:
+- Using full sort when heap is enough
+- Wrong heap direction
+- Not maintaining heap size k for top-k problems
+
+Hints to give user:
+- Do you need only the next best element again and again?
+- Can a heap avoid sorting everything?
+- If you only need top k, should the heap size stay at k?
+
+Example problems:
+- Kth Largest Element
+- Merge K Sorted Lists
+- Top K Frequent Elements
+- Find Median from Data Stream
+
+================================================================================
+23. INTERVALS
+================================================================================
+What it is:
+Problems involving ranges [start, end] and overlaps.
+
+When to use:
+- Meeting times
+- Merge overlapping intervals
+- Insert interval
+- Resource scheduling
+
+Strong clues:
+- Input contains start/end pairs
+- "Overlap"
+- "Merge"
+- "Meeting rooms"
+- "Intervals"
+
+Ask yourself:
+- Should intervals be sorted by start or end?
+- When do two intervals overlap?
+- What should happen when overlap exists?
+
+Typical time complexity:
+- Often O(n log n) due to sorting
+
+Common mistakes:
+- Wrong overlap condition
+- Forgetting final interval append
+
+Hints to give user:
+- Sort intervals first
+- Compare current interval with the last merged one
+- If they overlap, how should you update the end?
+
+Example problems:
+- Merge Intervals
+- Insert Interval
+- Meeting Rooms
+- Non-overlapping Intervals
+
+================================================================================
+24. LINKED LIST POINTER MANIPULATION
+================================================================================
+What it is:
+Careful node reference changes to reverse, merge, split, or reorder linked lists.
+
+When to use:
+- Reverse linked list
+- Merge sorted lists
+- Remove nth node
+- Reorder list
+
+Strong clues:
+- Linked list structure
+- Need in-place modification
+- Need O(1) extra space
+
+Ask yourself:
+- Which pointers change at each step?
+- Do I need dummy node?
+- What should prev, curr, next represent?
+
+Typical time complexity:
+- Usually O(n)
+
+Common mistakes:
+- Losing next pointer before rewiring
+- Not using dummy node when useful
+- Breaking list accidentally
+
+Hints to give user:
+- Before changing current.next, save the original next node
+- Would a dummy node simplify edge cases?
+- Draw 3 pointers: prev, curr, next
+
+Example problems:
+- Reverse Linked List
+- Merge Two Sorted Lists
+- Remove Nth Node From End
+- Reorder List
+
+================================================================================
+25. TREE DFS
+================================================================================
+What it is:
+Depth-first traversal on trees using recursion or stack.
+
+When to use:
+- Need subtree information
+- Root-left-right, left-root-right, left-right-root
+- Path sum
+- Diameter
+- Validate BST
+
+Strong clues:
+- Binary tree / tree
+- Need info from left and right child
+- Need path-based or subtree-based computation
+
+Ask yourself:
+- What should recursive call return?
+- Is this pre-order, in-order, or post-order style?
+- Does answer depend on subtree information?
+
+Typical time complexity:
+- Usually O(n)
+
+Common mistakes:
+- Mixing global answer with returned value
+- Wrong traversal order
+- Null handling issues
+
+Hints to give user:
+- What information do you want from left child and right child?
+- Should current node process happen before or after children?
+- Is the answer local to a node or global across the tree?
+
+Example problems:
+- Maximum Depth of Binary Tree
+- Path Sum
+- Diameter of Binary Tree
+- Validate Binary Search Tree
+
+================================================================================
+26. TREE BFS
+================================================================================
+What it is:
+Level-order traversal using a queue.
+
+When to use:
+- Process nodes level by level
+- Need level averages, zigzag, right side view
+
+Strong clues:
+- "Level order"
+- "Each level"
+- "Minimum depth"
+- "Right side view"
+
+Ask yourself:
+- Do I care about level boundaries?
+- Do I need level count or level aggregation?
+
+Typical time complexity:
+- Usually O(n)
+
+Common mistakes:
+- Mixing nodes from different levels
+- Not measuring queue size before level loop
+
+Hints to give user:
+- For each level, first record current queue size
+- Process exactly those many nodes for the current level
+
+Example problems:
+- Binary Tree Level Order Traversal
+- Minimum Depth of Binary Tree
+- Binary Tree Right Side View
+
+================================================================================
+27. GRAPH DFS
+================================================================================
+What it is:
+Depth-first traversal for components, reachability, and cycle-like exploration.
+
+When to use:
+- Explore graph deeply
+- Count connected components
+- Detect cycles in some settings
+- Flood fill
+
+Strong clues:
+- Graph or grid exploration
+- "Connected components"
+- "Can reach?"
+- Need exhaustive path exploration
+
+Ask yourself:
+- Do I need visited set?
+- Is recursion depth safe?
+- Is graph directed or undirected?
+
+Typical time complexity:
+- O(V + E)
+
+Common mistakes:
+- Forgetting visited
+- Infinite loops in cyclic graphs
+
+Hints to give user:
+- From each unvisited node, explore all reachable nodes
+- Mark visited before exploring neighbors
+
+Example problems:
+- Number of Provinces
+- Number of Islands
+- Flood Fill
+- Clone Graph
+
+================================================================================
+28. GRAPH BFS
+================================================================================
+What it is:
+Breadth-first traversal for shortest distance in unweighted graph or grid.
+
+When to use:
+- Minimum steps
+- Shortest path in unweighted graph
+- State transformation
+
+Strong clues:
+- "Minimum moves"
+- "Shortest path"
+- Grid with four directions
+- All edge weights same
+
+Ask yourself:
+- Is each move equal cost?
+- Can I expand from source level by level?
+
+Typical time complexity:
+- O(V + E)
+
+Common mistakes:
+- Delaying visited marking
+- Not handling multi-source starts
+
+Hints to give user:
+- Push all starting nodes if multi-source
+- Distance increases by one after each level
+
+Example problems:
+- Word Ladder
+- Rotting Oranges
+- Shortest Path in Binary Matrix
+
+================================================================================
+29. TOPOLOGICAL SORT
+================================================================================
+What it is:
+Ordering of nodes in a directed acyclic graph so that dependencies come first.
+
+When to use:
+- Course prerequisites
+- Dependency resolution
+- Need valid order
+- DAG processing
+
+Strong clues:
+- "Prerequisite"
+- "Dependency"
+- "Order tasks"
+- Directed graph with dependencies
+
+Ask yourself:
+- Is the graph directed?
+- Does an edge mean one item must come before another?
+- Is cycle detection needed?
+
+Typical time complexity:
+- O(V + E)
+
+Common mistakes:
+- Not computing indegree correctly
+- Forgetting cycle check if ordering length < n
+
+Hints to give user:
+- Build graph and indegree
+- Start from nodes with indegree 0
+- After removing a node, reduce indegree of its neighbors
+
+Example problems:
+- Course Schedule
+- Course Schedule II
+- Alien Dictionary style ideas
+
+================================================================================
+30. UNION FIND / DISJOINT SET UNION (DSU)
+================================================================================
+What it is:
+Efficiently track connected components with union and find operations.
+
+When to use:
+- Connectivity queries
+- Grouping
+- Cycle detection in undirected graph
+- Kruskal MST
+
+Strong clues:
+- "Connected components"
+- "Are these in same group?"
+- Repeated union operations
+- Dynamic connectivity
+
+Ask yourself:
+- Do I need to merge groups repeatedly?
+- Do I need to check if two nodes belong to same set?
+
+Typical time complexity:
+- Nearly O(1) amortized with path compression + union by rank/size
+
+Common mistakes:
+- Not compressing paths
+- Union without finding roots
+- Forgetting initialization
+
+Hints to give user:
+- Each node starts as its own parent
+- Before merging, find representative parent of each node
+- If roots are same, they are already connected
+
+Example problems:
+- Number of Connected Components
+- Redundant Connection
+- Accounts Merge
+- Kruskal's Algorithm
+
+================================================================================
+31. TRIE
+================================================================================
+What it is:
+Tree-like structure for storing strings by characters.
+
+When to use:
+- Prefix search
+- Dictionary lookup
+- Word autocomplete
+- Many string insert/search operations
+
+Strong clues:
+- "Prefix"
+- "Starts with"
+- Dictionary of words
+- Many repeated prefix queries
+
+Ask yourself:
+- Do I need efficient prefix operations?
+- Would storing all prefixes help?
+
+Typical time complexity:
+- O(length of word)
+
+Common mistakes:
+- Not marking end-of-word
+- Confusing full word search with prefix check
+
+Hints to give user:
+- Each character can represent an edge
+- Do you need to know whether a prefix exists or a full word exists?
+
+Example problems:
+- Implement Trie
+- Replace Words
+- Word Search II
+
+================================================================================
+32. STRING MATCHING / PATTERN MATCHING
+================================================================================
+What it is:
+Techniques for searching or comparing patterns in strings.
+
+When to use:
+- Find pattern occurrences
+- Prefix/suffix relationships
+- Repeated substring structure
+
+Strong clues:
+- "Find pattern in text"
+- "Repeated substring"
+- "Longest prefix which is suffix"
+
+Ask yourself:
+- Is direct comparison enough?
+- Do I need preprocessing of pattern?
+- Is rolling hash / KMP / Z useful?
+
+Common mistakes:
+- Writing O(n*m) when larger optimization is needed
+- Index mistakes in preprocessing
+
+Hints to give user:
+- Can you reuse previous matching information?
+- Does the pattern have self-overlap that can help?
+
+Example problems:
+- Implement strStr
+- Repeated Substring Pattern
+- Longest Happy Prefix
+
+================================================================================
+33. BIT MANIPULATION
+================================================================================
+What it is:
+Use binary properties and bitwise operators to solve efficiently.
+
+When to use:
+- Odd/even
+- Power of two
+- Unique number
+- Subset mask
+- Compact state representation
+
+Strong clues:
+- "Every number appears twice except one"
+- "Power of two"
+- "Count set bits"
+- Small n subsets via mask
+
+Ask yourself:
+- Can bits represent state compactly?
+- Does XOR cancel duplicates?
+- Do I need to inspect/set/clear specific bits?
+
+Typical time complexity:
+- Often O(n) or O(1) per operation
+
+Common mistakes:
+- Confusing bitwise and logical operators
+- Sign bit issues in some languages
+
+Hints to give user:
+- What does XOR do when the same value appears twice?
+- Can each bit represent yes/no for one choice?
+- Is n small enough for bitmasking subsets?
+
+Example problems:
+- Single Number
+- Counting Bits
+- Subsets via bitmask
+- Power of Two
+
+================================================================================
+34. MATRIX / GRID TRAVERSAL
+================================================================================
+What it is:
+Process 2D arrays using DFS, BFS, DP, or simulation.
+
+When to use:
+- Grid movement
+- Islands
+- Shortest path in matrix
+- DP on board
+- Spiral traversal
+
+Strong clues:
+- 2D matrix/grid
+- Move up/down/left/right
+- Count regions
+- Path from top-left to bottom-right
+
+Ask yourself:
+- Is this traversal, shortest path, or DP?
+- Do I need visited?
+- Are moves limited to directions?
+
+Common mistakes:
+- Going out of bounds
+- Re-visiting cells
+- Wrong directional loops
+
+Hints to give user:
+- First identify whether this is BFS, DFS, or DP on grid
+- Keep a direction array for cleaner code
+- Always check boundaries
+
+Example problems:
+- Number of Islands
+- Flood Fill
+- Unique Paths
+- Spiral Matrix
+- Rotten Oranges
+
+================================================================================
+35. DP ON GRID
+================================================================================
+What it is:
+Dynamic programming where state is based on cell position.
+
+When to use:
+- Count paths
+- Minimum path sum
+- Moving right/down or limited directions
+
+Strong clues:
+- Grid path count
+- Min cost path
+- Each cell depends on top/left
+
+Ask yourself:
+- What does dp[i][j] mean?
+- Which previous cells can reach current cell?
+
+Typical time complexity:
+- Usually O(n*m)
+
+Common mistakes:
+- Wrong initialization of first row/column
+- Obstacles handling
+
+Hints to give user:
+- Define dp[i][j] as answer up to this cell
+- Which neighbors contribute to current state?
+
+Example problems:
+- Unique Paths
+- Unique Paths II
+- Minimum Path Sum
+
+================================================================================
+36. SUBSETS / COMBINATIONS / PERMUTATIONS
+================================================================================
+What it is:
+Pattern family involving selecting elements, arranging them, or generating all possibilities.
+
+When to use:
+- "Return all subsets"
+- "Return all combinations"
+- "Return all permutations"
+
+Strong clues:
+- Need all possible arrangements/selections
+- Exponential answer size
+
+Ask yourself:
+- Is order important?
+- Can elements repeat?
+- Do I need choose/not choose branching?
+
+Common mistakes:
+- Duplicate handling
+- Wrong backtracking state
+
+Hints to give user:
+- For each element, can you choose it or skip it?
+- If order matters, how do you track used elements?
+
+Example problems:
+- Subsets
+- Combination Sum
+- Permutations
+- Subsets II
+
+================================================================================
+37. KADANE'S ALGORITHM
+================================================================================
+What it is:
+Optimized pattern for maximum sum contiguous subarray.
+
+When to use:
+- Maximum sum subarray
+- Contiguous region optimization
+
+Strong clues:
+- "Maximum sum subarray"
+- Need best contiguous segment
+
+Ask yourself:
+- Should I continue current subarray or start new from here?
+
+Typical time complexity:
+- O(n)
+
+Common mistakes:
+- Wrong handling of all-negative arrays
+
+Hints to give user:
+- At each element, decide whether extending previous sum helps
+- Keep both current best ending here and global best
+
+Example problems:
+- Maximum Subarray
+
+================================================================================
+38. MERGE SORT BASED COUNTING
+================================================================================
+What it is:
+Use merge sort framework to count inversions or important pairs while sorting.
+
+When to use:
+- Count inversions
+- Count reverse pairs
+- Need ordered relation across halves
+
+Strong clues:
+- "Count pairs (i, j) where i < j and condition...)"
+- Need better than O(n^2)
+
+Ask yourself:
+- Can divide and conquer help count cross-half pairs efficiently?
+
+Hints to give user:
+- While merging two sorted halves, can you count valid cross pairs?
+
+Example problems:
+- Count Inversions
+- Reverse Pairs
+
+================================================================================
+39. LINE SWEEP / EVENT SORTING
+================================================================================
+What it is:
+Convert intervals or events into sorted start/end points and process in order.
+
+When to use:
+- Meeting rooms
+- Maximum overlap
+- Skyline-like event processing
+
+Strong clues:
+- Many intervals, need overlap count
+- Process by timeline
+
+Ask yourself:
+- Can I sort all events by position/time?
+- What state changes when event starts or ends?
+
+Hints to give user:
+- Think in terms of events happening on a line
+- Sort starts and ends, then process from left to right
+
+Example problems:
+- Meeting Rooms II
+- Maximum overlap intervals
+
+================================================================================
+40. SEARCH ON ANSWER
+================================================================================
+What it is:
+Binary search over possible answer values instead of indices.
+
+When to use:
+- Need minimum feasible / maximum feasible value
+- Have monotonic feasibility function
+
+Strong clues:
+- "Minimum capacity"
+- "Smallest possible value"
+- "Maximum minimum distance"
+- Can test a candidate answer
+
+Ask yourself:
+- If value x works, do larger values also work? Or smaller?
+- Can I write a helper function is_possible(x)?
+
+Hints to give user:
+- Do not search over array positions
+- Search over the answer range
+- Build a yes/no feasibility check
+
+Example problems:
+- Koko Eating Bananas
+- Ship Packages Within D Days
+- Aggressive Cows style problems
+
+================================================================================
+41. STATE SPACE BFS
+================================================================================
+What it is:
+Treat each configuration as a node and use BFS for minimum steps.
+
+When to use:
+- Puzzle transformations
+- Lock combinations
+- Word transformations
+
+Strong clues:
+- "Minimum moves to transform"
+- Each move changes state slightly
+- Unweighted transitions
+
+Ask yourself:
+- What represents one state?
+- What are valid next states?
+- How to avoid revisiting states?
+
+Hints to give user:
+- Model each configuration as a graph node
+- Use queue + visited for minimum transitions
+
+Example problems:
+- Open the Lock
+- Word Ladder
+
+================================================================================
+42. DP ON STRINGS
+================================================================================
+What it is:
+Dynamic programming where states involve prefixes of one or two strings.
+
+When to use:
+- Edit distance
+- Longest common subsequence
+- Palindromic subsequences/substrings
+- String matching costs
+
+Strong clues:
+- Two strings
+- Need compare prefixes
+- "Minimum operations"
+- "Longest common"
+
+Ask yourself:
+- Does dp[i][j] represent answer for prefixes ending at i, j?
+- What happens when characters match or differ?
+
+Hints to give user:
+- Compare characters one by one
+- Let state represent prefixes
+- Transition usually depends on neighboring cells
+
+Example problems:
+- LCS
+- Edit Distance
+- Distinct Subsequences
+- Longest Palindromic Subsequence
+
+================================================================================
+43. DP ON SUBSEQUENCES / CHOICE TAKE-NOT TAKE
+================================================================================
+What it is:
+At each index choose take or skip, often with target/weight constraints.
+
+When to use:
+- Knapsack
+- Target sum
+- Partition equal subset sum
+- Count subsets
+
+Strong clues:
+- Choose elements
+- Weight/capacity/target
+- Subsequence, not necessarily contiguous
+
+Ask yourself:
+- At index i, what happens if I take this element or skip it?
+- What extra parameter is needed (remaining target/capacity)?
+
+Hints to give user:
+- State often looks like (index, remaining target)
+- For every element, branch into take and not take
+
+Example problems:
+- 0/1 Knapsack
+- Subset Sum
+- Partition Equal Subset Sum
+- Target Sum
+
+================================================================================
+44. LIS / ORDERED SUBSEQUENCE DP
+================================================================================
+What it is:
+Find longest increasing or related subsequence patterns.
+
+When to use:
+- Need increasing/decreasing subsequence
+- Sequence ordering matters, contiguity does not
+
+Strong clues:
+- "Increasing subsequence"
+- "Longest chain"
+- Order matters but not contiguous
+
+Ask yourself:
+- Does each position depend on earlier positions?
+- Is O(n^2) DP enough, or need O(n log n)?
+
+Hints to give user:
+- Define answer ending at each index
+- Transition from previous smaller values
+
+Example problems:
+- Longest Increasing Subsequence
+- Russian Doll Envelopes
+- Longest Chain Pair
+
+================================================================================
+45. STOCK DP
+================================================================================
+What it is:
+DP pattern for buy/sell decisions with states like holding/not holding, transactions left, cooldown, fee.
+
+When to use:
+- Buy and sell stock variants
+
+Strong clues:
+- "Buy/sell"
+- Cooldown
+- Transaction fee
+- At most k transactions
+
+Ask yourself:
+- What states matter: day, holding, transactions left?
+- What decisions are possible today?
+
+Hints to give user:
+- Define state by day and whether you currently hold a stock
+- Add more state only if problem includes fee/cooldown/transaction cap
+
+Example problems:
+- Best Time to Buy and Sell Stock I/II/III/IV
+- With Cooldown
+- With Transaction Fee
+
+================================================================================
+46. BITMASK DP
+================================================================================
+What it is:
+Use a bitmask to represent chosen elements/state, often for small n.
+
+When to use:
+- n is small, usually <= 15 to 20
+- Need subset states
+- Traveling salesman style
+
+Strong clues:
+- "Visit all"
+- Small n + subset conditions
+- Need exact selected set info
+
+Ask yourself:
+- Can one integer bitmask represent chosen elements?
+- Is number of subsets manageable?
+
+Hints to give user:
+- Let bit i show whether element i is chosen
+- DP state can combine current position + mask
+
+Example problems:
+- Traveling Salesman variants
+- Matchsticks / assignment style subset DP
+
+================================================================================
+47. TREE DP
+================================================================================
+What it is:
+Dynamic programming on tree nodes using child subtree answers.
+
+When to use:
+- Tree optimization
+- Include/exclude node
+- Path and subtree decisions
+
+Strong clues:
+- Tree structure
+- Need best value under constraints involving parent-child
+
+Ask yourself:
+- What should each node return to parent?
+- Do I need multiple states per node?
+
+Hints to give user:
+- Solve for children first
+- Then combine child states to compute current node states
+
+Example problems:
+- House Robber III
+- Binary Tree Cameras
+- Maximum Path Sum (tree-style reasoning)
+
+================================================================================
+48. UNION OF PATTERNS
+================================================================================
+What it is:
+Many problems use more than one pattern together.
+
+Common combinations:
+- Sorting + Two Pointers
+- Hash Map + Prefix Sum
+- BFS + Visited Set
+- DFS + Backtracking
+- Binary Search + Greedy check
+- Heap + Hash Map
+- Sliding Window + Hash Map
+- Intervals + Greedy
+- DP + Bitmask
+- Tree DFS + DP
+
+Hint to give user:
+- First identify data structure and goal
+- Then identify core pattern
+- Finally see whether a helper pattern is needed
+
+================================================================================
+CLUE-TO-PATTERN CHEAT SHEET
+================================================================================
+If problem says...                  Likely pattern
+---------------------------------------------------------------
+pair in sorted array                Two Pointers
+subarray / substring contiguous     Sliding Window / Prefix Sum
+range sum query                     Prefix Sum
+many range updates                  Difference Array
+cycle in linked list                Fast and Slow Pointers
+sorted search                       Binary Search
+minimum feasible / maximum feasible Binary Search on Answer
+overlapping intervals               Intervals + Sorting
+top k                              Heap
+nearest greater/smaller            Monotonic Stack
+window max/min                     Monotonic Queue
+level order / shortest unweighted  BFS
+components / islands               DFS or BFS
+dependency / prerequisites         Topological Sort
+connectivity / merge groups        Union Find
+prefix word search                 Trie
+all subsets / all permutations     Backtracking
+min cost / count ways / optimal    DP
+matching parentheses               Stack
+k transactions stock               Stock DP
+grid shortest path                 BFS
+grid paths count                   DP on Grid
+take or skip element               DP on Subsequences
+increasing subsequence             LIS DP
+state transformations              State Space BFS
+
+================================================================================
+HOW TO GIVE HINTS WITHOUT GIVING FULL SOLUTION
+================================================================================
+Level 1 Hint:
+- Identify the pattern only
+Example:
+"This looks like a sliding window problem because the question asks about a
+contiguous subarray."
+
+Level 2 Hint:
+- Mention the key idea
+Example:
+"Try maintaining a window with left and right pointers, and adjust it whenever
+the condition becomes invalid."
+
+Level 3 Hint:
+- Mention what to store
+Example:
+"You may need a hash map to store character frequencies inside the current window."
+
+Level 4 Hint:
+- Mention transition or check
+Example:
+"When the window has all required characters, try shrinking from the left."
+
+Level 5 Hint:
+- Mention complexity target
+Example:
+"A good solution should avoid checking all subarrays and aim for O(n)."
+
+================================================================================
+QUESTION TEMPLATE FOR THE AGENT
+================================================================================
+When a user provides a problem, the agent should try to answer in this format:
+
+1. Most likely pattern
+2. Why this pattern fits
+3. Clues from the statement
+4. What data structure may help
+5. First step to start
+6. Small hint, not full code
+7. Time complexity target
+
+Example response style:
+- Most likely pattern: Sliding Window
+- Why: The problem asks for a longest substring, which is a contiguous region
+- Clues: substring, longest, condition on characters
+- Data structure: Hash map/set
+- Start: Expand the right pointer, and when invalid, shrink from the left
+- Hint: Track frequencies of characters currently inside the window
+- Target complexity: O(n)
+
+================================================================================
+FINAL ADVICE FOR PATTERN DETECTION
+================================================================================
+To identify the correct pattern, always ask:
+1. Is the input array, string, linked list, tree, graph, or grid?
+2. Is the answer about pair, subarray, subsequence, path, range, or grouping?
+3. Is the data sorted or can it be sorted?
+4. Is contiguity required?
+5. Do I need minimum/maximum/count/existence/all possibilities?
+6. Are there repeated subproblems?
+7. Do I need nearest greater/smaller?
+8. Do I need shortest path or level order?
+9. Do I need dependency ordering?
+10. Do I need to merge groups or check connectivity?
+
+End of knowledge base.
