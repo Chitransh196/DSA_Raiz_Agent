@@ -29,9 +29,10 @@
 
 import os
 import requests
+import streamlit as st
 
-HF_TOKEN = os.getenv("HF_TOKEN")
-
+#HF_TOKEN = os.getenv("HF_TOKEN")
+HF_TOKEN = st.secrets["HF_TOKEN"]
 if not HF_TOKEN:
     raise ValueError("HF_TOKEN not found!")
 
