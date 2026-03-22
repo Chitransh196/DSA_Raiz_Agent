@@ -27,35 +27,39 @@
 #         return f"❌ Error: {e}"
 
 
-
 import os
-from huggingface_hub import InferenceClient
+import requests
 
-# Get token from environment (works locally + Streamlit Cloud)
 HF_TOKEN = os.getenv("HF_TOKEN")
 
-# Safety check (VERY IMPORTANT)
 if not HF_TOKEN:
-    raise ValueError("❌ HF_TOKEN not found! Please set it in environment variables or Streamlit secrets.")
+    raise ValueError("HF_TOKEN not found!")
 
-# Initialize client
-client = InferenceClient(api_key=HF_TOKEN)
+API_URL = "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-7B-Instruct"
 
-MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
+headers = {
+    "Authorization": f"Bearer {HF_TOKEN}"
+}
 
 
 def call_llm(prompt: str) -> str:
     try:
-        response = client.chat.completions.create(
-            model=MODEL_NAME,
-            messages=[
-                {"role": "system", "content": "You are a helpful DSA tutor."},
-                {"role": "user", "content": prompt},
-            ],
-            max_tokens=300,
-            temperature=0.3,
-        )
-        return response.choices[0].message.content.strip()
+        payload = {
+            "inputs": prompt,
+            "parameters": {
+                "temperature": 0.3,
+                "max_new_tokens": 300
+            }
+        }
+
+        response = requests.post(API_URL, headers=headers, json=payload)
+
+        result = response.json()
+
+        if isinstance(result, list):
+            return result[0]["generated_text"]
+
+        return str(result)
 
     except Exception as e:
         return f"❌ Error: {e}"
